@@ -11,6 +11,7 @@ public enum LanternState
 public class LanternCore : MonoBehaviour
 {
 
+    Rigidbody2D rb;
     LanternState lanternState;
     [SerializeField] private Transform playerLanternPosition;
     ThrownManager thrownManager; //เชื่อมเข้ากับตัวเช็คการโยนสำหรับการสั่งให้มันเริ่มโยนได้
@@ -22,6 +23,7 @@ public class LanternCore : MonoBehaviour
         pickAble = false;
         lanternState = LanternState.Attach;
         thrownManager = GameObject.Find("[MANAGE] LanternThrownManager").GetComponent<ThrownManager>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -44,7 +46,8 @@ public class LanternCore : MonoBehaviour
         LayerMask.NameToLayer("Lantern"),
         LayerMask.NameToLayer("Player"),
         true);
-        transform.position = playerLanternPosition.position;
+        Vector2 targetPos = playerLanternPosition.position;
+        rb.MovePosition(targetPos);
     }
 
     public void SwitchState()
