@@ -24,9 +24,9 @@ public class State_PlayerWalk : PlayerBaseState
             player.SwitchState(player.state_PlayerIdle);
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Z) && player.isTouchingGround)
         {
-            player.SwitchState(player.state_PlayerJump);
+            player.SwitchState(player.state_PlayerJump );
         }
 
         if (Input.GetKeyDown(KeyCode.X) && !player.lantern.pickAble)

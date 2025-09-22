@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DarknessManager : MonoBehaviour
 {
+    //ใช้สำหรับสร้างเสียงหลอน bla bla bla ในอนาคต
     DarknessStatus playerStatus;
 
     void Awake()

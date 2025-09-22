@@ -17,15 +17,16 @@ public class DarknessStatus : MonoBehaviour
     }
     void FixedUpdate()
     {
-            if (stayInDarkTime < darknessCountdown)
-            {
-                stayInDarkTime += Time.deltaTime;
-            }
-            else
-            {
-                Destroy(gameObject);
-                Debug.Log("Player Death");
-            }
+        if (stayInDarkTime < darknessCountdown)
+        {
+            stayInDarkTime += Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+            Debug.Log("Player Death");
+            GameStateManager.ChangeGameState(GameState.GameOver);    
+        }
     }
 
     void Update()

@@ -8,6 +8,7 @@ public class State_PlayerJump : PlayerBaseState
     private float jumpAnimTime;
     public override void EnterState(PlayerStateManager player)
     {
+        jumpAnimTime = player.jumpAnimTime;
         rb = player.player_Rb;
         rb.velocity = Vector2.zero;
         rb.AddForce(Vector2.up * player.jumpPower, ForceMode2D.Impulse);
@@ -22,21 +23,26 @@ public class State_PlayerJump : PlayerBaseState
     {
         player.play_Input = Input.GetAxis("Horizontal");
 
-        if (jumpAnimTime >= 0)
+        if (Input.GetKeyUp(KeyCode.Z) && rb.velocity.y > 0)
         {
-            jumpAnimTime -= Time.deltaTime;
+            rb.velocity = new Vector2(rb.velocity.x , rb.velocity.y/2);
         }
-        else
-        {
-            if (player.isTouchingGround)
+
+        if (jumpAnimTime >= 0)
             {
-                player.SwitchState(player.state_PlayerIdle);
+                jumpAnimTime -= Time.deltaTime;
             }
             else
             {
-                player.SwitchState(player.state_PlayerFalling);
+                if (player.isTouchingGround)
+                {
+                    player.SwitchState(player.state_PlayerIdle);
+                }
+                else
+                {
+                    player.SwitchState(player.state_PlayerFalling);
+                }
             }
-        }
         
     }
 }

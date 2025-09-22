@@ -32,8 +32,9 @@ public class PlayerStateManager : MonoBehaviour
     #region Jump Value
 
     [Header("Jump Input")]
-    [HideInInspector] public bool isTouchingGround; // เชื่อมกับ Script PlayerJumpCol
+    public bool isTouchingGround; // เชื่อมกับ Script PlayerJumpCol
     public float jumpPower;
+    public float jumpAnimTime = 0.3f;
 
     #endregion
 

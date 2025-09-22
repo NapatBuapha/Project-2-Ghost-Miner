@@ -5,18 +5,23 @@ using UnityEngine;
 public enum LanternState
     {
         Attach,
-        UnAttach
+        UnAttach,
+        Hanging
     }
 
 public class LanternCore : MonoBehaviour
 {
 
     Rigidbody2D rb;
-    LanternState lanternState;
+    public LanternState lanternState { get; private set; }
     [SerializeField] private Transform playerLanternPosition;
     ThrownManager thrownManager; //เชื่อมเข้ากับตัวเช็คการโยนสำหรับการสั่งให้มันเริ่มโยนได้
     float passableTime = 2;
     public bool pickAble { get; private set; }
+
+    //สำหรับระบบแขวน
+
+    Transform hangingPos;
 
     void Start()
     {
@@ -36,6 +41,10 @@ public class LanternCore : MonoBehaviour
             case LanternState.UnAttach:
                 pickAble = true;
                 break;
+            case LanternState.Hanging:
+                pickAble = true;
+                HanggingState();
+                break;
         }
     }
 
@@ -50,17 +59,15 @@ public class LanternCore : MonoBehaviour
         rb.MovePosition(targetPos);
     }
 
-    public void SwitchState()
+    void HanggingState()
     {
-        switch (lanternState)
-        {
-            case LanternState.Attach:
-                lanternState = LanternState.UnAttach;
-                break;
-            case LanternState.UnAttach:
-                lanternState = LanternState.Attach;
-                break;
-        }
+        gameObject.transform.rotation = hangingPos.rotation;
+        rb.MovePosition(hangingPos.position);
+    }
+
+    public void SetHaggingTransform(Transform tran_)
+    {
+        hangingPos = tran_;
     }
 
     public void SwitchState(LanternState state)
@@ -82,9 +89,9 @@ public class LanternCore : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && pickAble)
         {
-            SwitchState();
+            SwitchState(LanternState.Attach);
         }
     }
 

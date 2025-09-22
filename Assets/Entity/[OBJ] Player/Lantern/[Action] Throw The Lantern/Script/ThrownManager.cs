@@ -99,7 +99,7 @@ public class ThrownManager : MonoBehaviour
 	void OnDragEnd()
 	{
 		//push the lantern
-		lanternCore.SwitchState();
+		lanternCore.SwitchState(LanternState.UnAttach);
 		lantern.ResumeRB();
 		lantern.Push(force);
 
