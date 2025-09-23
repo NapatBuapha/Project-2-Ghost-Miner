@@ -131,6 +131,7 @@ public class LanternCore : MonoBehaviour
         false);
         gameObject.transform.rotation = hangingPos.rotation;
         rb.MovePosition(hangingPos.position);
+        SwitchState(LightState.OverShine);
     }
     public void SetHaggingTransform(Transform tran_)
     {
