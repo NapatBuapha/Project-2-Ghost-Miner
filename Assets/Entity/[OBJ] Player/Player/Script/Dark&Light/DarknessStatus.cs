@@ -8,6 +8,8 @@ public class DarknessStatus : MonoBehaviour
     [SerializeField] private float stayInDarkTime;
     [SerializeField] private LayerMask lightLayer;
     [SerializeField] private Collider2D col;
+    public float darkness_Multiplier;
+    public bool isInVoid;
 
 
     void Start()
@@ -19,7 +21,7 @@ public class DarknessStatus : MonoBehaviour
     {
         if (stayInDarkTime < darknessCountdown)
         {
-            stayInDarkTime += Time.deltaTime;
+            stayInDarkTime += Time.deltaTime * darkness_Multiplier;
         }
         else
         {
@@ -39,6 +41,7 @@ public class DarknessStatus : MonoBehaviour
 
     public void ResetTimer()
     {
+        if(!isInVoid)
         stayInDarkTime = 0;
     }
 
