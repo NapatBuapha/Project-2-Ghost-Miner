@@ -26,17 +26,18 @@ public class State_PlayerThrowing : PlayerBaseState
             player.SwitchState(player.state_PlayerIdle);
         }
 
-        if (Mathf.Abs(player.play_Input) > 0)
-            {
-                player.SwitchState(player.state_PlayerWalk);
-                player.EndThrown();
-            }
+        if (player.walkCon)
+        {
+            player.SwitchState(player.state_PlayerWalk);
+            player.EndThrown();
+        }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (player.jumpCon)
         {
             player.SwitchState(player.state_PlayerJump);
             player.EndThrown();
         }
+        
     }
 }
 

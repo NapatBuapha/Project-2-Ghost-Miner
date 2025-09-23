@@ -19,6 +19,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public State_PlayerFalling state_PlayerFalling { get; private set; } = new State_PlayerFalling();
     public State_PlayerThrowing state_PlayerThrowing { get; private set; } = new State_PlayerThrowing();
+    public State_PlayerLampDash state_PlayerLampDash { get; private set; } = new State_PlayerLampDash();
 
     #region Walking Value
 
@@ -26,6 +27,7 @@ public class PlayerStateManager : MonoBehaviour
     [HideInInspector] public float play_Input;
     public Rigidbody2D player_Rb { get; private set; }
     public float speed;
+    public bool walkCon { get; private set; }
 
     #endregion
 
@@ -35,15 +37,35 @@ public class PlayerStateManager : MonoBehaviour
     public bool isTouchingGround; // เชื่อมกับ Script PlayerJumpCol
     public float jumpPower;
     public float jumpAnimTime = 0.3f;
+    public bool jumpCon { get; private set; }
 
     #endregion
 
     #region Throw Value
     private ThrownManager thrownManager;
-    [HideInInspector] public bool canThrow_; //อย่าสับสับกับ canThrown ของตัว thrown manager
+    [HideInInspector] public bool canThrow_; //อย่าสับสบกับ canThrown ของตัว thrown manager
     public LanternCore lantern;
+    public bool thrownCon { get; private set; }
+    #endregion
+
+
+    #region  LampDash Value
+    [Header("LampDash Input")]
+    public float dashPower;
+    public bool dashCon { get; private set; }
+    public float dashAnimTime = 0.5f;
+    #endregion
+
+    #region  LampControl Value
+    [Header("LampControl Input")]
+    public float maxLampReturnCharge;
+    public bool lampFreezeCon { get; private set; }
+    public bool lampReturnCon { get; private set; }
+    public bool lampLightControlCon { get; private set; }
+    public float lampReturnCharge { get; private set; }
 
     #endregion
+
 
     void Awake()
     {
@@ -54,20 +76,53 @@ public class PlayerStateManager : MonoBehaviour
         thrownManager = GameObject.Find("[MANAGE] LanternThrownManager").GetComponent<ThrownManager>();
 
         #endregion
+
+        #region Set the variable
+        lampReturnCharge = 0f;
+        #endregion
     }
 
     #region StateMachineZone
     void Start()
     {
-
         SwitchState(state_PlayerIdle);
         currentState.EnterState(this);
     }
 
     void Update()
     {
+        #region StateCondition
+        walkCon = Mathf.Abs(play_Input) > 0;
+        jumpCon = Input.GetKeyDown(KeyCode.Z) && isTouchingGround;
+        thrownCon = Input.GetKeyDown(KeyCode.X) && !lantern.pickAble;
+        dashCon = Input.GetKeyDown(KeyCode.C) && lantern.lanternState == LanternState.Floating && lantern.pickAble;
+        #endregion
+
+        #region NonStateCondition
+        lampFreezeCon = Input.GetKeyDown(KeyCode.X) && lantern.pickAble && (lantern.lanternState != LanternState.Floating);
+        lampReturnCon = Input.GetKey(KeyCode.X) && (lantern.lanternState == LanternState.Floating);
+        lampLightControlCon = Input.GetKeyDown(KeyCode.S) && (lantern.lanternState == LanternState.Floating);
+        #endregion
+
+        //คำสั่งที่ใช้กับทุก State
+        if (lampLightControlCon)
+        {
+            switch (lantern.lightState)
+            {
+                case LightState.Normal:
+                    lantern.SwitchState(LightState.OverShine);
+                    break;
+                case LightState.OverShine:
+                    lantern.SwitchState(LightState.Normal);
+                    break;
+            }
+            
+        }
+
+
         currentState.UpdateState(this);
     }
+
 
     void FixedUpdate()
     {
@@ -91,6 +146,29 @@ public class PlayerStateManager : MonoBehaviour
     public void EndThrown()
     {
         thrownManager.CancleThrown();
+    }
+
+    public void LampFreeze()
+    {
+        lantern.SwitchState(LanternState.Floating);
+    }
+
+    public void ChargeToChangeLanternState()
+    {
+        if (lampReturnCharge < maxLampReturnCharge)
+        {
+            lampReturnCharge += Time.fixedDeltaTime;
+        }
+        else
+        {
+            lantern.SwitchState(LanternState.Returning);
+            lampReturnCharge = 0;
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            lampReturnCharge = 0;
+        }
     }
     #endregion
 }

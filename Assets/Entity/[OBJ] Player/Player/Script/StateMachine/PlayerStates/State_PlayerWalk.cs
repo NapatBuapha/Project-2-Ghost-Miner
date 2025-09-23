@@ -24,14 +24,29 @@ public class State_PlayerWalk : PlayerBaseState
             player.SwitchState(player.state_PlayerIdle);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && player.isTouchingGround)
+        if (player.jumpCon)
         {
-            player.SwitchState(player.state_PlayerJump );
+            player.SwitchState(player.state_PlayerJump);
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !player.lantern.pickAble)
+        if (player.thrownCon)
         {
             player.SwitchState(player.state_PlayerThrowing);
+        }
+
+        if (player.dashCon)
+        {
+            player.SwitchState(player.state_PlayerLampDash);
+        }
+
+        if (player.lampFreezeCon)
+        {
+            player.LampFreeze();
+        }
+
+        if (player.lampReturnCon)
+        {
+            player.ChargeToChangeLanternState();
         }
     }
 }

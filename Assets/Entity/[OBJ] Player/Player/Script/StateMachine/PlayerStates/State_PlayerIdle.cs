@@ -7,6 +7,7 @@ public class State_PlayerIdle : PlayerBaseState
     Rigidbody2D rb;
     public override void EnterState(PlayerStateManager player)
     {
+        Debug.Log("testIdle");
         rb = player.player_Rb;
     }
 
@@ -19,19 +20,34 @@ public class State_PlayerIdle : PlayerBaseState
     {
         player.play_Input = Input.GetAxis("Horizontal");
 
-        if (Mathf.Abs(player.play_Input) > 0)
+        if (player.walkCon)
         {
             player.SwitchState(player.state_PlayerWalk);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && player.isTouchingGround)
+        if (player.jumpCon)
         {
             player.SwitchState(player.state_PlayerJump);
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !player.lantern.pickAble)
+        if (player.thrownCon)
         {
             player.SwitchState(player.state_PlayerThrowing);
+        }
+
+        if (player.dashCon)
+        {
+            player.SwitchState(player.state_PlayerLampDash);
+        }
+
+        if (player.lampFreezeCon)
+        {
+            player.LampFreeze();
+        }
+
+        if (player.lampReturnCon)
+        {
+            player.ChargeToChangeLanternState();
         }
     }
 }

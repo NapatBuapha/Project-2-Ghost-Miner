@@ -25,7 +25,17 @@ public class State_PlayerJump : PlayerBaseState
 
         if (Input.GetKeyUp(KeyCode.Z) && rb.velocity.y > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x , rb.velocity.y/2);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
+        }
+
+        if (player.dashCon)
+        {
+            player.SwitchState(player.state_PlayerLampDash);
+        }
+
+        if (player.lampFreezeCon)
+        {
+            player.LampFreeze();
         }
 
         if (jumpAnimTime >= 0)

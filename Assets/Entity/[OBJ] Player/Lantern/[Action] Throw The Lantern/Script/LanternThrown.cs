@@ -18,6 +18,7 @@ public class LanternThrown : MonoBehaviour
 
 	public void Push(Vector2 force)
 	{
+		rb.velocity = Vector2.zero;
 		rb.AddForce(force, ForceMode2D.Impulse);
 	}
 
