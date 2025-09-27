@@ -110,7 +110,6 @@ public class LanternCore : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         col.isTrigger = true;
-        Vector2 targetPos = playerLanternPosition.position;
 
         Vector2 direction = playerLanternPosition.position - transform.position;
         float distance = direction.magnitude;
