@@ -28,11 +28,6 @@ public class State_PlayerJump : PlayerBaseState
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
         }
 
-        if (player.dashCon)
-        {
-            player.SwitchState(player.state_PlayerLampDash);
-        }
-
         if (player.lampFreezeCon)
         {
             player.LampFreeze();

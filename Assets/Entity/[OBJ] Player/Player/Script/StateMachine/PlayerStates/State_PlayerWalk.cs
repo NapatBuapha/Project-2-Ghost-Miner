@@ -34,11 +34,6 @@ public class State_PlayerWalk : PlayerBaseState
             player.SwitchState(player.state_PlayerThrowing);
         }
 
-        if (player.dashCon)
-        {
-            player.SwitchState(player.state_PlayerLampDash);
-        }
-
         if (player.lampFreezeCon)
         {
             player.LampFreeze();

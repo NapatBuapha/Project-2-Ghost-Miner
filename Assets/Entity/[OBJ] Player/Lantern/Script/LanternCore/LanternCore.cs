@@ -29,11 +29,17 @@ public class LanternCore : MonoBehaviour
     [SerializeField] private float floatingSpeed = 5f;
     public bool pickAble { get; private set; }
     Collider2D col;
-    float baseGra;
+
     [SerializeField] private LightArea lampLight;
     float baseLightRadius;
+    float baseGra;
 
     Transform hangingPos;
+
+    [Header("Void Control")]
+
+    [SerializeField] float voidStopDistance = 10;
+    [SerializeField] float voidDelayedTime = 3;
 
     void Start()
     {
@@ -129,9 +135,20 @@ public class LanternCore : MonoBehaviour
         LayerMask.NameToLayer("Lantern"),
         LayerMask.NameToLayer("Player"),
         false);
+
         gameObject.transform.rotation = hangingPos.rotation;
         rb.MovePosition(hangingPos.position);
         SwitchState(LightState.OverShine);
+
+        //Stop The void
+        GameObject movingV = GameObject.FindWithTag("MovingVoid");
+
+        if (Vector3.Distance(transform.position, movingV.transform.position) < voidStopDistance)
+        {
+            MovingVoid moVoid = movingV.GetComponent<MovingVoid>();
+            moVoid.counter = 3;
+        }
+
     }
     public void SetHaggingTransform(Transform tran_)
     {

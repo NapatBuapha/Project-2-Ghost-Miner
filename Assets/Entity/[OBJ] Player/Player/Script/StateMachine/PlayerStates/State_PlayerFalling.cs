@@ -28,11 +28,6 @@ public class State_PlayerFalling : PlayerBaseState
             player.SwitchState(player.state_PlayerIdle);
         }
         
-         if (player.dashCon)
-        {
-            player.SwitchState(player.state_PlayerLampDash);
-        }
-        
         if (player.lampFreezeCon)
         {
             player.LampFreeze();

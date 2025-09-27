@@ -14,29 +14,22 @@ public class State_PlayerThrowing : PlayerBaseState
 
     public override void FixedUpdateState(PlayerStateManager player)
     {
-        rb.velocity = new Vector2(player.speed * player.play_Input, rb.velocity.y);
     }
 
     public override void UpdateState(PlayerStateManager player)
     {
-        player.play_Input = Input.GetAxis("Horizontal");
 
         if (Input.GetMouseButtonUp(0))
         {
             player.SwitchState(player.state_PlayerIdle);
         }
 
-        if (player.walkCon)
+        if (Input.GetKeyUp(KeyCode.E))
         {
-            player.SwitchState(player.state_PlayerWalk);
+            player.SwitchState(player.state_PlayerIdle);
             player.EndThrown();
         }
 
-        if (player.jumpCon)
-        {
-            player.SwitchState(player.state_PlayerJump);
-            player.EndThrown();
-        }
         
     }
 }

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Hanger : MonoBehaviour
 {
+    bool hasLantern;
+    GameObject movingVoid;
+
+    void Update()
+    {
+        
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Lantern"))
@@ -14,7 +21,6 @@ public class Hanger : MonoBehaviour
                 lantern.SetHaggingTransform(transform);
                 lantern.SwitchState(LanternState.Hanging);
             }
-
         }
     }
 }

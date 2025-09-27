@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Respawn : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private Vector3 reSpawnPos;
 
+    public UnityEvent checkPoint;
     public void LoadData(GameData data)
     {
         reSpawnPos = data.reSpawnPos;

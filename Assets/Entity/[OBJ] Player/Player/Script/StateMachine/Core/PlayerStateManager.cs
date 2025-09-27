@@ -19,7 +19,6 @@ public class PlayerStateManager : MonoBehaviour
 
     public State_PlayerFalling state_PlayerFalling { get; private set; } = new State_PlayerFalling();
     public State_PlayerThrowing state_PlayerThrowing { get; private set; } = new State_PlayerThrowing();
-    public State_PlayerLampDash state_PlayerLampDash { get; private set; } = new State_PlayerLampDash();
 
     #region Walking Value
 
@@ -49,12 +48,6 @@ public class PlayerStateManager : MonoBehaviour
     #endregion
 
 
-    #region  LampDash Value
-    [Header("LampDash Input")]
-    public float dashPower;
-    public bool dashCon { get; private set; }
-    public float dashAnimTime = 0.5f;
-    #endregion
 
     #region  LampControl Value
     [Header("LampControl Input")]
@@ -93,15 +86,15 @@ public class PlayerStateManager : MonoBehaviour
     {
         #region StateCondition
         walkCon = Mathf.Abs(play_Input) > 0;
-        jumpCon = Input.GetKeyDown(KeyCode.Z) && isTouchingGround;
-        thrownCon = Input.GetKeyDown(KeyCode.X) && !lantern.pickAble;
-        dashCon = Input.GetKeyDown(KeyCode.C) && lantern.lanternState == LanternState.Floating && lantern.pickAble;
+        jumpCon = Input.GetKeyDown(KeyCode.Space) && isTouchingGround;
+        thrownCon = Input.GetKeyDown(KeyCode.E) && !lantern.pickAble;
         #endregion
 
         #region NonStateCondition
-        lampFreezeCon = Input.GetKeyDown(KeyCode.X) && lantern.pickAble && (lantern.lanternState != LanternState.Floating);
-        lampReturnCon = Input.GetKey(KeyCode.X) && (lantern.lanternState == LanternState.Floating);
-        lampLightControlCon = Input.GetKeyDown(KeyCode.S) && (lantern.lanternState == LanternState.Floating);
+        lampFreezeCon = Input.GetKeyDown(KeyCode.F) && lantern.pickAble && (lantern.lanternState != LanternState.Floating);
+        lampReturnCon = Input.GetKey(KeyCode.Q) && lantern.pickAble && (lantern.lanternState != LanternState.Returning);
+        //(lantern.lanternState == LanternState.Floating);
+        //lampLightControlCon = Input.GetKeyDown(KeyCode.S) && (lantern.lanternState == LanternState.Floating);
         #endregion
 
         //คำสั่งที่ใช้กับทุก State
