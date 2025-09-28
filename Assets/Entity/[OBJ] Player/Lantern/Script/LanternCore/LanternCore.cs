@@ -158,7 +158,7 @@ public class LanternCore : MonoBehaviour
     #region Light State
     void OverShineState()
     {
-        lampLight.UpdateLight(baseLightRadius * 2);
+        lampLight.UpdateLight(baseLightRadius * 3);
     }
     void NormalState()
     {
