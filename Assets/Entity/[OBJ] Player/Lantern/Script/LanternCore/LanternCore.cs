@@ -107,6 +107,7 @@ public class LanternCore : MonoBehaviour
 
     void ReturnToPlayerState()
     {
+         SwitchState(LightState.Normal);
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         col.isTrigger = true;

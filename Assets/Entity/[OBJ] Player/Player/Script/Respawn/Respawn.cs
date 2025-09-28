@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Respawn : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private Vector3 reSpawnPos;
+    [SerializeField] private GameObject firstSpawnPos;
 
     public UnityEvent checkPoint;
     public void LoadData(GameData data)
@@ -17,6 +18,11 @@ public class Respawn : MonoBehaviour, IDataPersistence
     public void SaveData(ref GameData data)
     {
         data.reSpawnPos = reSpawnPos;
+    }
+
+    public void Reset()
+    {
+        reSpawnPos = firstSpawnPos.transform.position;
     }
 
     void Start()
