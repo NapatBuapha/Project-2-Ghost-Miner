@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum LanternState
@@ -19,6 +20,8 @@ public enum LightState
 
 public class LanternCore : MonoBehaviour
 {
+    [SerializeField] private Animator playerAnimator; //For haslantern bool
+    public GameObject sprite;
     Rigidbody2D rb;
     public LanternState lanternState { get; private set; }
     public LightState lightState { get; private set; }
@@ -33,6 +36,7 @@ public class LanternCore : MonoBehaviour
     [SerializeField] private LightArea lampLight;
     float baseLightRadius;
     float baseGra;
+    [SerializeField] int targetLayer;
 
     Transform hangingPos;
 
@@ -40,6 +44,8 @@ public class LanternCore : MonoBehaviour
 
     [SerializeField] float voidStopDistance = 10;
     [SerializeField] float voidDelayedTime = 3;
+
+    float soundDelayed;
 
     void Start()
     {
@@ -65,6 +71,7 @@ public class LanternCore : MonoBehaviour
                 AttachState();
                 break;
             case LanternState.UnAttach:
+                sprite.SetActive(true);
                 pickAble = true;
                 break;
             case LanternState.Hanging:
@@ -76,6 +83,18 @@ public class LanternCore : MonoBehaviour
                 break;
         }
 
+        if (lanternState == LanternState.Attach)
+        {
+            sprite.SetActive(false);
+            playerAnimator.SetBool("HasLamp", true);
+        }
+        else
+        {
+            sprite.SetActive(true);
+            playerAnimator.SetBool("HasLamp", false);
+        }
+
+
         switch (lightState)
         {
             case LightState.OverShine:
@@ -84,6 +103,11 @@ public class LanternCore : MonoBehaviour
             default:
                 NormalState();
                 break;
+        }
+
+        if (soundDelayed > 0)
+        {
+            soundDelayed -= Time.deltaTime;
         }
     }
 
@@ -170,6 +194,7 @@ public class LanternCore : MonoBehaviour
 
     public void SwitchState(LanternState state)
     {
+        soundDelayed = 1;
         lanternState = state;
     }
 
@@ -205,6 +230,12 @@ public class LanternCore : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && pickAble)
         {
             Pickup();
+        }
+
+        if (collision.gameObject.layer == targetLayer)
+        {   
+            if (lanternState == LanternState.UnAttach && soundDelayed < 0)
+                AudioManager.PlaySound(SoundType.LANTERN_Drop, 0.4f);
         }
     }
 

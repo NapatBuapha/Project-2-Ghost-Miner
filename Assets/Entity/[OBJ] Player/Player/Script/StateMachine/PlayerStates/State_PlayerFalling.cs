@@ -7,6 +7,7 @@ public class State_PlayerFalling : PlayerBaseState
     Rigidbody2D rb;
     public override void EnterState(PlayerStateManager player)
     {
+        player.animator.SetTrigger("Falling"); 
         rb = player.player_Rb;
     }
 

@@ -7,7 +7,7 @@ public class State_PlayerIdle : PlayerBaseState
     Rigidbody2D rb;
     public override void EnterState(PlayerStateManager player)
     {
-        Debug.Log("testIdle");
+        player.animator.SetTrigger("Idle");
         rb = player.player_Rb;
     }
 

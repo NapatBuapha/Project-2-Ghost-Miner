@@ -5,13 +5,25 @@ using UnityEngine;
 public class State_PlayerWalk : PlayerBaseState
 {
     Rigidbody2D rb;
+    float footStepDelayed = 0.4f;
     public override void EnterState(PlayerStateManager player)
     {
+        player.animator.SetTrigger("Walk");
         rb = player.player_Rb;
     }
 
     public override void FixedUpdateState(PlayerStateManager player)
     {
+        if (footStepDelayed > 0)
+        {
+            footStepDelayed -= Time.deltaTime;
+        }
+        else
+        {
+            AudioManager.PlaySound(SoundType.PLAYER_walk, 0.2f);
+            footStepDelayed = 0.4f;
+        }
+        
         rb.velocity = new Vector2(player.speed * player.play_Input, rb.velocity.y);
     }
 

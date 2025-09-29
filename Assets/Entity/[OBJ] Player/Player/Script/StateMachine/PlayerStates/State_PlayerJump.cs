@@ -8,6 +8,7 @@ public class State_PlayerJump : PlayerBaseState
     private float jumpAnimTime;
     public override void EnterState(PlayerStateManager player)
     {
+        player.animator.SetTrigger("Jump");
         jumpAnimTime = player.jumpAnimTime;
         rb = player.player_Rb;
         rb.velocity = Vector2.zero;

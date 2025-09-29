@@ -19,6 +19,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public State_PlayerFalling state_PlayerFalling { get; private set; } = new State_PlayerFalling();
     public State_PlayerThrowing state_PlayerThrowing { get; private set; } = new State_PlayerThrowing();
+    public State_PlayerDead state_PlayerDead { get; private set; } = new State_PlayerDead();
 
     #region Walking Value
 
@@ -59,15 +60,16 @@ public class PlayerStateManager : MonoBehaviour
 
     #endregion
 
+    public Animator animator { get; private set; }
+
 
     void Awake()
     {
         #region Get the component Ref here
-
         lantern = GameObject.FindWithTag("Lantern").GetComponent<LanternCore>();
         player_Rb = GetComponent<Rigidbody2D>();
         thrownManager = GameObject.Find("[MANAGE] LanternThrownManager").GetComponent<ThrownManager>();
-
+        animator = GetComponent<Animator>();
         #endregion
 
         #region Set the variable

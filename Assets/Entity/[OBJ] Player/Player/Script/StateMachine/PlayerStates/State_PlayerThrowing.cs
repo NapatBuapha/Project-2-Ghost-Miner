@@ -7,6 +7,7 @@ public class State_PlayerThrowing : PlayerBaseState
     Rigidbody2D rb;
     public override void EnterState(PlayerStateManager player)
     {
+        player.animator.SetTrigger("ChargeThrow");
         Debug.Log("Test");
         player.StartThrown();
         rb = player.player_Rb;
@@ -14,6 +15,7 @@ public class State_PlayerThrowing : PlayerBaseState
 
     public override void FixedUpdateState(PlayerStateManager player)
     {
+        
     }
 
     public override void UpdateState(PlayerStateManager player)
@@ -21,6 +23,7 @@ public class State_PlayerThrowing : PlayerBaseState
 
         if (Input.GetMouseButtonUp(0))
         {
+            player.animator.SetTrigger("Throw");
             player.SwitchState(player.state_PlayerIdle);
         }
 

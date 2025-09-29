@@ -75,6 +75,7 @@ public class MovingVoid : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
+            AudioManager.PlaySound(SoundType.DARKNESS_scream2, 0.4f);
             DarknessStatus dStatus = col.GetComponent<DarknessStatus>();
             dStatus.darkness_Multiplier = baseMultiplier;
             dStatus.isInVoid = false;

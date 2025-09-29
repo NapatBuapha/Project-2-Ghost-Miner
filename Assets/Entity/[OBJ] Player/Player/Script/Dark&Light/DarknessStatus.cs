@@ -10,34 +10,68 @@ public class DarknessStatus : MonoBehaviour
     [SerializeField] private Collider2D col;
     public float darkness_Multiplier;
     public bool isInVoid;
+    PlayerStateManager player;
+    bool isDead;
+    bool isInDark;
+    float soundDelayed = 0f;
 
 
     void Start()
     {
+        isDead = false;
+        player = GetComponent<PlayerStateManager>();
         col = GetComponent<Collider2D>();
         ResetTimer();
     }
     void FixedUpdate()
     {
+        if (isDead || !isInDark)
+            return;
+            
         if (stayInDarkTime < darknessCountdown)
         {
             stayInDarkTime += Time.deltaTime * darkness_Multiplier;
         }
         else
         {
-            Destroy(gameObject);
+            isDead = true;
+            AudioManager.PlaySound(SoundType.DARKNESS_scream, 0.5f);
+            player.SwitchState(player.state_PlayerDead);
             Debug.Log("Player Death");
-            GameStateManager.ChangeGameState(GameState.GameOver);    
+            GameStateManager.ChangeGameState(GameState.GameOver);
         }
     }
 
     void Update()
     {
+        if (isDead)
+            return;
+
         if (col.IsTouchingLayers(lightLayer))
         {
+            isInDark = false;
             ResetTimer();
         }
-    }
+        else if (!col.IsTouchingLayers(lightLayer))
+        {
+            isInDark = true;
+        }
+
+        if (soundDelayed > 0)
+        {
+            soundDelayed -= Time.deltaTime;
+        }
+        else
+        {
+            if (isInDark || isInVoid)
+            {
+                AudioManager.PlaySound(SoundType.PLAYER_hearthBeats, 0.4f);
+                soundDelayed = 4f;
+
+            }
+        }
+        }
+    
 
     public void ResetTimer()
     {

@@ -9,9 +9,10 @@ public class PlayerKillingObj : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            Destroy(col.gameObject);
+            PlayerStateManager player = col.GetComponent<PlayerStateManager>();
+            player.SwitchState(player.state_PlayerDead);
             Debug.Log("Player Death");
-            GameStateManager.ChangeGameState(GameState.GameOver);    
+            GameStateManager.ChangeGameState(GameState.GameOver); 
         }
     }
 }
