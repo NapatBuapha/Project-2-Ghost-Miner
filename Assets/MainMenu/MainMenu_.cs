@@ -9,8 +9,8 @@ public class MainMenu_ : MonoBehaviour
     public void PlayGame()
     {
         // โหลด Scene Gameplay (อย่าลืมไปใส่ใน Build Settings)
-        SceneManager.LoadScene("GameScene");
         DataPersistenceManager.instance.NewGame();
+        SceneManager.LoadScene("GameScene");
     }
 
     // ฟังก์ชันเมื่อกดปุ่ม Option

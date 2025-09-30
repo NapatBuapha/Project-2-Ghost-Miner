@@ -9,6 +9,7 @@ public class Respawn : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject firstSpawnPos;
 
     public UnityEvent checkPoint;
+
     public void LoadData(GameData data)
     {
         reSpawnPos = data.reSpawnPos;
@@ -33,7 +34,6 @@ public class Respawn : MonoBehaviour, IDataPersistence
     public void SetPosition(Vector3 checkpoint)
     {
         reSpawnPos = checkpoint;
-        GameObject.Find("[MANAGER] DataPersistenceManager").GetComponent<DataPersistenceManager>().SaveGame();
     }
 
     void OnTriggerEnter2D(Collider2D col)

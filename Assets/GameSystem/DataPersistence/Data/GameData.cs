@@ -9,6 +9,6 @@ public class GameData
     
     public GameData()
     {
-        this.reSpawnPos = Vector3.zero;
+        this.reSpawnPos = new Vector3(-63,-1,0);
     }
 }
