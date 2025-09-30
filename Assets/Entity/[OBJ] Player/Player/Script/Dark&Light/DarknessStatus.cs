@@ -25,20 +25,23 @@ public class DarknessStatus : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (isDead || !isInDark)
+        if (isDead)
             return;
-            
-        if (stayInDarkTime < darknessCountdown)
+
+        if (isInDark || isInVoid)
         {
-            stayInDarkTime += Time.deltaTime * darkness_Multiplier;
-        }
-        else
-        {
-            isDead = true;
-            AudioManager.PlaySound(SoundType.DARKNESS_scream, 0.5f);
-            player.SwitchState(player.state_PlayerDead);
-            Debug.Log("Player Death");
-            GameStateManager.ChangeGameState(GameState.GameOver);
+            if (stayInDarkTime < darknessCountdown)
+            {
+                stayInDarkTime += Time.deltaTime * darkness_Multiplier;
+            }
+            else
+            {
+                isDead = true;
+                AudioManager.PlaySound(SoundType.DARKNESS_scream, 0.5f);
+                player.SwitchState(player.state_PlayerDead);
+                Debug.Log("Player Death");
+                GameStateManager.ChangeGameState(GameState.GameOver);
+            }
         }
     }
 
