@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Mainmenu : MonoBehaviour
+public class MainMenu_ : MonoBehaviour
 {
     // ฟังก์ชันเมื่อกดปุ่ม Play
     public void PlayGame()
     {
         // โหลด Scene Gameplay (อย่าลืมไปใส่ใน Build Settings)
         SceneManager.LoadScene("GameScene");
+        DataPersistenceManager.instance.NewGame();
     }
 
     // ฟังก์ชันเมื่อกดปุ่ม Option

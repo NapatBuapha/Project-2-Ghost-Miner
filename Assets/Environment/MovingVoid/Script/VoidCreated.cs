@@ -33,6 +33,8 @@ public class VoidCreated : MonoBehaviour
             {
                 Destroy(gameObject);
                 mVoid.transform.position = new Vector3(movingPos.x, mVoid.transform.position.y, mVoid.transform.position.z);
+                AudioManager.PlaySound(SoundType.DARKNESS_scream, 0.6f);
+                mVoid.GetComponent<MovingVoid>().counter = 0;
             }
         }
     }
