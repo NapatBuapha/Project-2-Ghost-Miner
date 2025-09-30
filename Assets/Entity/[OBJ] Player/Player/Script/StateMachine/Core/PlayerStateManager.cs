@@ -93,7 +93,7 @@ public class PlayerStateManager : MonoBehaviour
         #endregion
 
         #region NonStateCondition
-        lampFreezeCon = Input.GetKeyDown(KeyCode.F) && lantern.pickAble && (lantern.lanternState != LanternState.Floating);
+        lampFreezeCon = Input.GetKeyDown(KeyCode.E) && lantern.pickAble && (lantern.lanternState != LanternState.Floating);
         lampReturnCon = Input.GetKey(KeyCode.Q) && lantern.pickAble && (lantern.lanternState != LanternState.Returning);
         //(lantern.lanternState == LanternState.Floating);
         //lampLightControlCon = Input.GetKeyDown(KeyCode.S) && (lantern.lanternState == LanternState.Floating);
