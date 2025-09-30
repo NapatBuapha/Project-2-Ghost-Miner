@@ -65334,7 +65334,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: cc61a05b491970042a90f5d7e8f19db6, type: 3}
   - name: PLAYER_hearthBeats
     sounds:
-    - {fileID: 8300000, guid: 7aa3a4f2ddcec6d4e954ee943e8ce74b, type: 3}
+    - {fileID: 8300000, guid: efb5e46a721066c42a31794130f7f8f0, type: 3}
   - name: DARKNESS_scream
     sounds:
     - {fileID: 8300000, guid: 417b75f856b4b2d4b84484767a113c55, type: 3}

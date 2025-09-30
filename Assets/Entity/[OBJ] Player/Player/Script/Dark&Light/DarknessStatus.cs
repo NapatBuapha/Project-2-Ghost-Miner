@@ -66,7 +66,7 @@ public class DarknessStatus : MonoBehaviour
             if (isInDark || isInVoid)
             {
                 AudioManager.PlaySound(SoundType.PLAYER_hearthBeats, 0.4f);
-                soundDelayed = 4f;
+                soundDelayed = 1.2f;
 
             }
         }

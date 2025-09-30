@@ -24,7 +24,7 @@ public class State_PlayerJump : PlayerBaseState
     {
         player.play_Input = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyUp(KeyCode.Z) && rb.velocity.y > 0)
+        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
         }
